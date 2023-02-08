@@ -164,7 +164,7 @@ def lucky():
             res = conn.getresponse()
             data = res.read()
             data = json.loads(data)
-            data = "爱情指数："+str(data["newslist"][1]["content"])+"   工作指数："+str(data["newslist"][2]["content"])+"\n今日概述："+str(data["newslist"][8]["content"])
+            data = "爱情指数："+str(data["newslist"][1]["content"])+"\n   工作指数："+str(data["newslist"][2]["content"])+"\n今日概述："+str(data["newslist"][8]["content"])
             return data
         except:
             return ("星座运势API调取错误，请检查API是否正确申请或是否填写正确")
@@ -190,15 +190,15 @@ def tip():
     if (Whether_tip!=False):
         try:
             conn = http.client.HTTPSConnection('api.tianapi.com')  #接口域名
-            params = urllib.parse.urlencode({'key':tianxing_API,'city':city})
+            params = urllib.parse.urlencode({'key':tianxing_API,'city':city,'1'})
             headers = {'Content-type':'application/x-www-form-urlencoded'}
             conn.request('POST','/tianqi/index',params,headers)
             res = conn.getresponse()
             data = res.read()
             data = json.loads(data)
             print(data)
-            pop = data["newslist"][0]["pop"]
-            tips = data["newslist"][0]["tips"]
+            pop = data["newslist"]["uv_index"]
+            tips = data["newslist"]["tips"]
             return pop,tips
         except:
             return ("天气预报API调取错误，请检查API是否正确申请或是否填写正确"),""
